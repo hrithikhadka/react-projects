@@ -11,12 +11,21 @@ function App() {
         <h2>Reviews</h2>
       </div>
       <div className="section-center">
-        {people.map((person, index) => {
+        {people.map((person, personIndex) => {
           const { id, image, name, title, quote } = person;
           //more functionalities here
-
+          let position = "nextSlide";
+          if (personIndex === index) {
+            position = "activeSlide";
+          }
+          if (
+            personIndex === index - 1 ||
+            (index === 0 && personIndex === people.length - 1)
+          ) {
+            position = "lastSlide";
+          }
           return (
-            <article key={id}>
+            <article key={id} className={position}>
               <img src={image} className="person-img" alt="name" />
               <h4>{name}</h4>
               <p className="title">{title}</p>
@@ -25,10 +34,10 @@ function App() {
             </article>
           );
         })}
-        <button className="prev">
+        <button className="prev" onClick={() => setIndex(index - 1)}>
           <FiChevronLeft />
         </button>
-        <button className="next">
+        <button className="next" onClick={() => setIndex(index + 1)}>
           <FiChevronRight />
         </button>
       </div>
